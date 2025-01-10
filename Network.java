@@ -36,7 +36,7 @@ public class Network {
         }
         for (int i = 0; i < this.userCount; i++) {
             if (users[i].getName().toLowerCase().equals(name.toLowerCase())){
-                return users[i];
+                return this.users[i];
             }
         }
         return null;
@@ -50,7 +50,7 @@ public class Network {
         if (name==null){
             return false;
         }
-        if ((getUser(name)!=null)||(this.userCount==users.length)) {
+        if ((this.getUser(name)!=null)||(this.userCount==users.length)) {
             return false;
         }
         else {
@@ -70,7 +70,7 @@ public class Network {
         if ((getUser(name1)==null)||(getUser(name2)==null)||(name1.toLowerCase().equals(name2.toLowerCase()))) {
             return false;
         } 
-        return getUser(name1).addFollowee(name2);
+        return this.getUser(name1).addFollowee(name2);
     }
     
     /** For the user with the given name, recommends another user to follow. The recommended user is
@@ -82,12 +82,12 @@ public class Network {
         int maxFollowers = 0;
         int index = 0;
         for (int i = 0; i < userCount; i++) {
-            if ((users[i]!=getUser(name))&&(getUser(name).countMutual(users[i])>maxFollowers)) {
+            if ((this.users[i]!=getUser(name))&&(getUser(name).countMutual(this.users[i])>maxFollowers)) {
                 maxFollowers = getUser(name).countMutual(users[i]);
                 index = i;
             }
         }
-        return users[index].toString();
+        return this.users[index].getName();
     }
 
     /** Computes and returns the name of the most popular user in this network: 
@@ -116,12 +116,15 @@ public class Network {
     /** Returns the number of times that the given name appears in the follows lists of all
      *  the users in this network. Note: A name can appear 0 or 1 times in each list. */
     private int followeeCount(String name) {
+        if (getUser(name)==null){
+            return 0;
+        }
         if (name==null){
             return 0;
         }
         int counter = 0;
         for (int i = 0; i < userCount; i++) {
-            if(users[i].follows(name))
+            if(this.users[i].follows(name))
             {
                 counter++;
             }
