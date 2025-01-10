@@ -85,19 +85,19 @@
             return false;
         }
         else {
-            for (int i = 0; i < this.follows.length; i++) {
+            for (int i = 0; i < this.fCount; i++) {
                 if (this.follows[i].equals(name)){
                     index = i;
                     //this.follows[i]=null;
                     break;
                 }
             }
-            for (int i = index; i < (this.follows.length-index) ; i++) {
-                if (this.follows[i]!=null){
-                    this.follows[i]=this.follows[i+1];
-                } 
+            for (int i = index; i < (this.fCount-1) ; i++) {
+                this.follows[i]=this.follows[i+1];
             }
+            this.follows[this.fCount-1]=null;
             this.fCount--;
+
         }
         return true;
     }
@@ -106,10 +106,11 @@
     /*  Notice: This is the size of the intersection of the two follows lists. */
     public int countMutual(User other) {
         int counter = 0;
-        for (int i = 0; i < other.follows.length; i++) {
+        for (int i = 0; i < 10; i++) {
             //each iteration will check if a follow of other is in this 
             //also checks that counter is not increased if the compared follow is null
-            if ((this.follows(other.follows[i])==true)&&(other.follows[i]!=null)) {
+            if ((this.follows(other.follows[i]))&&(other.follows[i]!=null)) {
+                //Tested-> System.out.println(other.follows[i]);
                 counter++;
             }
         }
@@ -119,12 +120,14 @@
     /** Checks is this user is a friend of the other user.
      *  (if two users follow each other, they are said to be "friends.") */
     public boolean isFriendOf(User other) {
-        for (int i = 0; i < 10; i++) {
-            if ((this.follows(other.follows[i]))&&(other.follows(this.follows[i]))){
-                return true;
-            }
-        //return false; was here 
+        if (this.follows(other.name)){
+            return true;
         }
+        //for (int i = 0; i < 10; i++) {
+            //if ((this.follows(other.follows[i]))&&(other.follows(this.follows[i]))){
+            //    return true;
+            //}
+        //return false; was here 
         return false;
     }
     /** Returns this user's name, and the names that s/he follows. */
