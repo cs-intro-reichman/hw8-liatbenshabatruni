@@ -89,7 +89,7 @@
         }
         else {
             for (int i = 0; i < this.fCount; i++) {
-                if (this.follows[i].equals(name)){
+                if (this.follows[i].toLowerCase().equals(name.toLowerCase())){
                     index = i;
                     //this.follows[i]=null;
                     break;
@@ -123,14 +123,12 @@
     /** Checks is this user is a friend of the other user.
      *  (if two users follow each other, they are said to be "friends.") */
     public boolean isFriendOf(User other) {
-        if (this.follows(other.name)){
-            return true;
+        if ((other.getName()==null)||(this.name==null)) {
+          return false;  
         }
-        //for (int i = 0; i < 10; i++) {
-            //if ((this.follows(other.follows[i]))&&(other.follows(this.follows[i]))){
-            //    return true;
-            //}
-        //return false; was here 
+        if ((this.follows(other.getName()))&&(other.follows(this.name))){
+            return true;
+        } 
         return false;
     }
     /** Returns this user's name, and the names that s/he follows. */
