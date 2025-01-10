@@ -44,6 +44,9 @@
     /** If this user follows the given name, returns true; otherwise returns false. */
     public boolean follows(String name) {
         for (int i = 0; i < this.follows.length; i++) {
+            if (this.follows[i]==null){
+                return false;
+            }
             if (this.follows[i].equals(name)){
                 //if the name is found in the array - return true 
                 return true; 
@@ -55,21 +58,19 @@
      *  If this user already follows the given name, or if the follows list is full, does nothing and returns false; */
     public boolean addFollowee(String name) {
         //if the number of the null follows is 10 - the list is full
-        if (follows(null)==false){
-            return false;
-        }
+        //if (this.follows(null)==false){return false;}
+
         //if the user is already in the array
-        if (follows(name)==true){
+        if (this.follows(name)==true){
             return false;
         }
         else {
             for (int i = 0; i < this.follows.length; i++) {
                 if (this.follows[i]==null){
                     this.follows[i]=name;
+                    this.fCount++;
+                    return true; 
                 }
-                //after adding to the null place the new name return true
-                return true;
-                
             }
         }
         return false;
@@ -78,18 +79,27 @@
     /** Removes the given name from the follows list of this user. If successful, returns true.
      *  If the name is not in the list, does nothing and returns false. */
     public boolean removeFollowee(String name) {
+        int index = 0;
         //If the name is not in the list
         if (this.follows(name)==false){
             return false;
         }
-        if (this.follows(name)){
+        else {
             for (int i = 0; i < this.follows.length; i++) {
                 if (this.follows[i].equals(name)){
-                    this.follows[i]=this.follows[++i];
+                    index = i;
+                    //this.follows[i]=null;
+                    break;
                 }
             }
+            for (int i = index; i < (this.follows.length-index) ; i++) {
+                if (this.follows[i]!=null){
+                    this.follows[i]=this.follows[i+1];
+                } 
+            }
+            this.fCount--;
         }
-        return  true;
+        return true;
     }
 
     /** Counts the number of users that both this user and the other user follow.
