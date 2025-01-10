@@ -96,6 +96,9 @@ public class Network {
         int counter = 0;
         int maxFollows=0;
         int index = 0;
+        if(users==null){
+            return null;
+        }
         for (int i = 0; i < userCount; i++) {
             for (int j = 0; j < userCount; j++) {
                 if ((this.users[i]==null)||(users[j]==null)){
